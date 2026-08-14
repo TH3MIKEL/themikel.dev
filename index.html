@@ -3,597 +3,732 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Miguel Ángel Moreno Ruiz — Desarrollo web</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>themikel — Desarrollador</title>
+<meta name="description" content="themikel. Desarrollo web hoy, software nativo mañana.">
 <style>
+
   :root{
-    --bg: #0E1B22;
-    --surface: #16262E;
-    --surface-alt: #1C2F38;
-    --border: #2C4048;
-    --cream: #F3EFE3;
-    --cream-dim: #C9C4B3;
-    --pine: #3A6E58;
-    --pine-light: #5C9A81;
-    --navy: #22475B;
-    --radius: 10px;
+    --bg: #fbfbfd;
+    --bg-alt: #f5f5f7;
+    --bg-dark: #000000;
+    --ink: #1d1d1f;
+    --ink-soft: #6e6e73;
+    --line: #d2d2d7;
+    --accent: #0066cc;
+    --accent-soft: #e8f0fe;
+    --radius: 28px;
+    --radius-sm: 18px;
+    --maxw: 1100px;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   }
 
-  *{margin:0;padding:0;box-sizing:border-box;}
+  *{ margin:0; padding:0; box-sizing:border-box; }
 
-  html{scroll-behavior:smooth;}
+  html{ scroll-behavior:smooth; }
 
   body{
+    font-family: var(--sans);
+    color: var(--ink);
     background: var(--bg);
-    color: var(--cream);
-    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
     line-height: 1.5;
     overflow-x: hidden;
   }
 
-  h1, h2, h3, .display{
-    font-family: 'Sora', sans-serif;
+  a{ color: inherit; text-decoration:none; }
+  img{ display:block; max-width:100%; }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
   }
 
-  code, .mono{
-    font-family: 'JetBrains Mono', monospace;
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
-
-  a{ color: inherit; text-decoration: none; }
-
-  ::selection{ background: var(--pine); color: var(--cream); }
 
   :focus-visible{
-    outline: 2px solid var(--pine-light);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  /* ---------- NAV ---------- */
+  header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(251,251,253,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
   }
-
-  .wrap{
-    max-width: 920px;
+  nav{
+    max-width: var(--maxw);
     margin: 0 auto;
     padding: 0 24px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* NAV */
-  nav{
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(14,27,34,0.92);
-    border-bottom: 1px solid var(--border);
-  }
-  nav .wrap{
+    height: 52px;
     display:flex;
     align-items:center;
-    justify-content: space-between;
-    padding: 16px 24px;
+    justify-content:space-between;
   }
-  .brand{
-    font-family: 'JetBrains Mono', monospace;
+  .logo{
     font-weight: 600;
     font-size: 15px;
-    letter-spacing: -0.02em;
-  }
-  .brand .dot{ color: var(--pine-light); }
-  .nav-links{
-    display:flex;
-    gap: 28px;
-    font-size: 14px;
-    color: var(--cream-dim);
-  }
-  .nav-links a:hover{ color: var(--cream); }
-  .nav-cta{
-    background: var(--pine);
-    color: var(--cream) !important;
-    padding: 9px 20px;
-    border-radius: 980px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background 0.15s ease;
-  }
-  .nav-cta:hover{ background: var(--pine-light); }
-  @media (max-width: 640px){
-    .nav-links{ display:none; }
-  }
-
-  /* HERO */
-  header.hero{
-    padding: 90px 0 60px;
-    position: relative;
-  }
-  .eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--pine-light);
-    background: rgba(92, 154, 129, 0.1);
-    border: 1px solid rgba(92, 154, 129, 0.3);
-    padding: 6px 12px;
-    border-radius: 980px;
-    margin-bottom: 28px;
-  }
-  .eyebrow .pulse{
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--pine-light);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse{
-    0%,100%{ opacity: 1; }
-    50%{ opacity: 0.3; }
-  }
-
-  h1.headline{
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(1.6rem, 4.2vw, 2.5rem);
-    font-weight: 500;
-    line-height: 1.5;
     letter-spacing: -0.01em;
-    max-width: 720px;
   }
-  h1.headline .kw{ color: var(--pine-light); }
-  h1.headline .str{ color: #D9B98C; }
-  h1.headline .cm{ color: var(--cream-dim); }
-  h1.headline .fn{ color: #8FB8D9; }
-
-  .sub{
-    margin-top: 22px;
-    font-size: 1.1rem;
-    color: var(--cream-dim);
-    max-width: 560px;
-  }
-  .hero-ctas{
-    margin-top: 36px;
+  .navlinks{
     display:flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 32px;
+    list-style:none;
   }
-  .btn{
-    padding: 11px 22px;
-    border-radius: 980px;
-    font-weight: 600;
-    font-size: 15px;
-    display:inline-flex;
-    align-items:center;
-    gap: 8px;
-    transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+  .navlinks a{
+    font-size: 12.5px;
+    color: var(--ink);
+    opacity: 0.82;
+    transition: opacity 0.2s;
   }
-  .btn:active{ transform: scale(0.97); }
-  .btn-primary{
-    background: var(--pine);
-    color: var(--cream);
-  }
-  .btn-primary:hover{ background: var(--pine-light); }
-  .btn-ghost{
-    border: 1px solid var(--border);
-    color: var(--cream);
-    background: transparent;
-  }
-  .btn-ghost:hover{ border-color: var(--pine-light); background: rgba(92,154,129,0.08); }
+  .navlinks a:hover{ opacity: 1; }
+  .navlinks{ font-weight: 400; }
 
-  /* TERMINAL CARD */
-  .terminal{
-    margin-top: 56px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  @media (max-width: 700px){
+    .navlinks{ display:none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 140px 24px 80px;
     overflow: hidden;
   }
-  .terminal-bar{
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    top: -20%;
+    left: 50%;
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(0,102,204,0.10) 0%, rgba(0,102,204,0) 65%);
+    pointer-events:none;
+    animation: driftGlow 12s ease-in-out infinite;
+  }
+  @keyframes driftGlow{
+    0%, 100%{ transform: translateX(-54%) translateY(0) scale(1); }
+    50%{ transform: translateX(-46%) translateY(30px) scale(1.08); }
+  }
+
+  .eyebrow{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: rise 0.8s cubic-bezier(.22,1,.36,1) 0.1s forwards;
+  }
+
+  .hero h1{
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    max-width: 900px;
+  }
+
+  .hero h1 .words-line.soft .word{
+    color: var(--ink-soft);
+  }
+
+  .hero p.sub{
+    margin-top: 22px;
+    font-size: clamp(17px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 560px;
+    font-weight: 400;
+    opacity: 0;
+    animation: rise 0.9s cubic-bezier(.22,1,.36,1) 0.4s forwards;
+  }
+
+  .hero-cta{
+    margin-top: 36px;
+    display:flex;
+    gap: 14px;
+    opacity: 0;
+    animation: rise 0.9s cubic-bezier(.22,1,.36,1) 0.55s forwards;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(18px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 6px;
+    padding: 12px 22px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: transform 0.25s cubic-bezier(.22,1,.36,1), background 0.25s, box-shadow .25s;
+  }
+  .btn-primary{
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0,102,204,0.28);
+  }
+  .btn-primary span{
+    display:inline-block;
+    transition: transform 0.25s cubic-bezier(.22,1,.36,1);
+  }
+  .btn-primary:hover span{ transform: translateX(3px); }
+  .btn-ghost{
+    background: rgba(0,0,0,0.05);
+    color: var(--ink);
+  }
+  .btn-ghost:hover{ background: rgba(0,0,0,0.08); }
+
+  /* floating code mockup */
+  .device-wrap{
+    margin-top: 64px;
+    width: min(760px, 90vw);
+    opacity: 0;
+    filter: blur(8px);
+    animation: fadeInSharp 1s cubic-bezier(.22,1,.36,1) 0.7s forwards;
+    will-change: transform;
+  }
+  @keyframes fadeInSharp{
+    from{ opacity:0; filter: blur(8px); }
+    to{ opacity:1; filter: blur(0); }
+  }
+  .device{
+    border-radius: 20px;
+    background: #1d1d1f;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.35);
+    overflow:hidden;
+    animation: floatDevice 6s ease-in-out 1.7s infinite;
+  }
+  @keyframes floatDevice{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-10px); }
+  }
+  .device-bar{
     display:flex;
     align-items:center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: var(--surface-alt);
-    border-bottom: 1px solid var(--border);
+    gap:7px;
+    padding: 13px 16px;
+    background: #2c2c2e;
   }
-  .terminal-bar span{
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--border);
+  .device-bar span{
+    width:11px; height:11px; border-radius:50%;
+    background:#4b4b4d;
   }
-  .terminal-title{
-    margin-left: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
-    color: var(--cream-dim);
-  }
-  .terminal-body{
-    padding: 26px 24px 30px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14.5px;
-    line-height: 1.9;
-  }
-  .t-prompt{ color: var(--pine-light); }
-  .t-key{ color: #D9B98C; }
-  .t-str{ color: #D9B98C; }
-  .t-comment{ color: var(--cream-dim); }
-  .cursor{
-    display:inline-block;
-    width: 8px; height: 16px;
-    background: var(--pine-light);
-    vertical-align: middle;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink{ 50%{ opacity: 0; } }
-
-  /* SECTIONS */
-  section{
-    padding: 70px 0;
-    position: relative;
-  }
-  .section-label{
-    font-family: 'JetBrains Mono', monospace;
+  .device-body{
+    padding: 22px 24px 28px;
+    font-family: var(--mono);
     font-size: 13px;
-    color: var(--pine-light);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    color: #b8b8bd;
+    text-align:left;
+    line-height: 1.7;
+  }
+  .device-body .k{ color:#ff7ab2; }
+  .device-body .s{ color:#67d585; }
+  .device-body .c{ color:#6e6e73; }
+  .device-body .f{ color:#6ab0f3; }
+  .cursor-blink{
+    display:inline-block;
+    width: 7px; height: 15px;
+    background: var(--accent);
+    margin-left: 2px;
+    animation: blink 1s steps(1) infinite;
+    vertical-align: -2px;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(10px);
+    transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1), filter 0.9s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.in{
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  /* ---------- WORD-BY-WORD TEXT REVEAL ---------- */
+  .words-line{
+    display:block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+  }
+  .word{
+    display:inline-block;
+    opacity: 0;
+    transform: translateY(0.5em);
+    filter: blur(6px);
+    transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1), filter 0.7s cubic-bezier(.22,1,.36,1);
+  }
+  .words-line.in .word{
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  h2.words-line{ display:inline; }
+  .section-head h2 .word{ }
+
+  section{ padding: 120px 0; }
+  .section-head{
+    text-align:center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+  .section-head .kicker{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
     margin-bottom: 12px;
   }
-  h2.section-title{
-    font-size: clamp(1.8rem, 4vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    max-width: 600px;
+  .section-head h2{
+    font-size: clamp(30px, 4.5vw, 46px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
   }
-  .section-desc{
+  .section-head p{
     margin-top: 16px;
-    color: var(--cream-dim);
-    font-size: 1.05rem;
-    max-width: 560px;
+    color: var(--ink-soft);
+    font-size: 18px;
   }
 
-  /* SOBRE MI */
-  .about-grid{
-    margin-top: 40px;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
-  .about-card{
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px 22px;
-  }
-  .about-card .tag{
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--pine-light);
-    margin-bottom: 14px;
-  }
-  .about-card h3{
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-  .about-card p{
-    font-size: 14px;
-    color: var(--cream-dim);
-  }
-
-  /* PRICING / CALCULATOR */
-  .price-tag{
-    margin-top: 8px;
-    display:flex;
-    align-items:baseline;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .price-tag .amount{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: clamp(2.4rem, 6vw, 3.6rem);
-    color: var(--pine-light);
-    letter-spacing: -0.01em;
-  }
-  .price-tag .per{
-    color: var(--cream-dim);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-  }
-
-  .calc-card{
-    margin-top: 44px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 30px;
-  }
-  .calc-top{
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .calc-top h3{ font-size: 16px; font-family: 'JetBrains Mono', monospace; color: var(--cream-dim); font-weight: 500; }
-
-  .calc-editor{
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
-    min-height: 160px;
-    white-space: pre-wrap;
-    color: var(--cream-dim);
-  }
-  .line-num{
-    color: #4A5A5F;
-    display:inline-block;
-    width: 24px;
-  }
-
-  .calc-controls{
-    margin-top: 22px;
-    display:flex;
-    align-items:center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  .calc-controls label{
-    font-size: 14px;
-    color: var(--cream-dim);
-    display:flex;
-    align-items:center;
-    gap: 10px;
-  }
-  input[type="range"]{
-    width: 220px;
-    accent-color: var(--pine);
-  }
-  input[type="number"]{
-    width: 90px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--cream);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-  }
-  .calc-result{
-    margin-left: auto;
-    text-align: right;
-  }
-  .calc-result .label{
-    font-size: 12.5px;
-    color: var(--cream-dim);
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .calc-result .value{
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: 2rem;
-    color: var(--pine-light);
-  }
-  .calc-note{
-    margin-top: 18px;
-    font-size: 12.5px;
-    color: var(--cream-dim);
-  }
-
-  /* CONTACT */
-  .contact-card{
-    margin-top: 36px;
+  /* ---------- WORK / PRODUCT GRID ---------- */
+  .grid-2{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 20px;
   }
-  @media (max-width: 640px){ .contact-card{ grid-template-columns: 1fr; } }
-  .contact-item{
-    background: var(--surface);
-    border: 1px solid var(--border);
+  @media (max-width: 800px){
+    .grid-2{ grid-template-columns: 1fr; }
+  }
+
+  .product-card{
     border-radius: var(--radius);
-    padding: 22px;
+    padding: 44px 36px;
+    background: var(--bg-alt);
     display:flex;
-    flex-direction: column;
-    gap: 6px;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    flex-direction:column;
+    min-height: 380px;
+    position: relative;
+    overflow:hidden;
+    transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1);
   }
-  .contact-item:hover{ border-color: var(--pine-light); background: var(--surface-alt); }
-  .contact-item .label{ font-size: 12.5px; color: var(--cream-dim); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; }
-  .contact-item .value{ font-size: 16px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+  .product-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -20px rgba(0,0,0,0.18);
+  }
+  .product-card.dark:hover{
+    box-shadow: 0 24px 48px -16px rgba(0,0,0,0.5);
+  }
+
+  .product-card.dark{
+    background: var(--bg-dark);
+    color: #f5f5f7;
+  }
+  .product-card .tag{
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: rgba(0,102,204,0.1);
+    color: var(--accent);
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .product-card.dark .tag{
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+  .product-card h3{
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .product-card p{
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 420px;
+  }
+  .product-card.dark p{ color: #a1a1a6; }
+
+  .stack-row{
+    margin-top: auto;
+    padding-top: 28px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+  }
+  .chip{
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 11px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.05);
+    color: var(--ink);
+  }
+  .product-card.dark .chip{
+    background: rgba(255,255,255,0.08);
+    color: #f5f5f7;
+  }
+
+  /* ---------- ROADMAP (signature) ---------- */
+  .roadmap-section{
+    background: var(--bg-dark);
+    color: #f5f5f7;
+  }
+  .roadmap-section .section-head p{ color:#a1a1a6; }
+  .roadmap-section .kicker{ color: #4d9fff; }
+
+  .roadmap{
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    gap: 0;
+  }
+  .rail{
+    position:absolute;
+    left: 27px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: linear-gradient(to bottom, #0066cc, rgba(255,255,255,0.08));
+  }
+  @media (max-width: 700px){
+    .rail{ left: 19px; }
+  }
+
+  .stage{
+    display:flex;
+    gap: 28px;
+    padding: 30px 0;
+    position: relative;
+  }
+  .stage-dot{
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1d1d1f;
+    border: 1px solid rgba(255,255,255,0.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #86868b;
+    z-index: 1;
+  }
+  @media (max-width: 700px){
+    .stage-dot{ width:40px; height:40px; font-size:10px; }
+  }
+  .stage.active .stage-dot{
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    animation: pulseDot 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%, 100%{ box-shadow: 0 0 0 6px rgba(0,102,204,0.18); }
+    50%{ box-shadow: 0 0 0 12px rgba(0,102,204,0.10); }
+  }
+  .stage-body{
+    padding-top: 4px;
+    flex: 1;
+  }
+  .stage-status{
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4d9fff;
+    margin-bottom: 6px;
+  }
+  .stage.future .stage-status{ color: #86868b; }
+  .stage h3{
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .stage p{
+    color: #a1a1a6;
+    font-size: 15.5px;
+    max-width: 520px;
+    margin-bottom: 14px;
+  }
+  .stage .chip{
+    background: rgba(255,255,255,0.08);
+    color: #e8e8ed;
+  }
+  .stage-row{ display:flex; flex-wrap:wrap; gap:8px; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-section{
+    text-align:center;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    margin: 0 24px;
+    padding: 90px 24px;
+  }
+  .contact-section h2{
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+  }
+  .contact-section p{
+    color: var(--ink-soft);
+    font-size: 18px;
+    margin-bottom: 36px;
+  }
+  .contact-links{
+    display:flex;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap:wrap;
+  }
 
   footer{
-    padding: 40px 0 60px;
     text-align:center;
-    color: var(--cream-dim);
+    padding: 48px 24px 40px;
+    color: var(--ink-soft);
     font-size: 13px;
-    font-family: 'JetBrains Mono', monospace;
-    border-top: 1px solid var(--border);
   }
+
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="brand">miguel<span class="dot">.</span>dev</div>
-    <div class="nav-links">
-      <a href="#sobre">Sobre mí</a>
-      <a href="#tarifas">Tarifas</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-    <a href="#contacto" class="nav-cta">Hablemos</a>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow"><span class="pulse"></span> DISPONIBLE PARA NUEVOS PROYECTOS</div>
-    <h1 class="headline"><span class="cm">// desarrollador web</span><br><span class="kw">const</span> <span class="fn">desarrollador</span> = <span class="str">"Miguel Ángel Moreno Ruiz"</span>;<br><span class="kw">function</span> <span class="fn">construir</span>(proyecto) {<br>&nbsp;&nbsp;<span class="kw">return</span> proyecto.<span class="fn">linea_a_linea</span>();<br>}</h1>
-    <p class="sub">Desarrollo de páginas web con una tarifa simple y transparente: pagas exactamente por lo que se escribe. Nada de estimaciones infladas.</p>
-    <div class="hero-ctas">
-      <a href="#contacto" class="btn btn-primary">Pedir presupuesto</a>
-      <a href="#tarifas" class="btn btn-ghost">Ver tarifas</a>
-    </div>
-
-    <div class="terminal">
-      <div class="terminal-bar">
-        <span></span><span></span><span></span>
-        <span class="terminal-title">~/miguel-moreno — zsh</span>
-      </div>
-      <div class="terminal-body">
-        <div><span class="t-prompt">$</span> cat sobre-mi.txt</div>
-        <div>Miguel Ángel Moreno Ruiz</div>
-        <div>&nbsp;</div>
-        <div><span class="t-prompt">$</span> cat especialidad.txt</div>
-        <div><span class="t-str">"Desarrollo de páginas web"</span></div>
-        <div>&nbsp;</div>
-        <div><span class="t-prompt">$</span> cat tarifa.txt</div>
-        <div><span class="t-key">0,30 €</span> <span class="t-comment">// por línea escrita</span> <span class="cursor"></span></div>
-      </div>
-    </div>
-  </div>
+<header>
+  <nav>
+    <a href="#top" class="logo">themikel.dev</a>
+    <ul class="navlinks">
+      <li><a href="#work">Trabajo</a></li>
+      <li><a href="#roadmap">Camino</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+  </nav>
 </header>
 
-<section id="sobre">
-  <div class="wrap">
-    <div class="section-label">Sobre mí</div>
-    <h2 class="section-title">Un desarrollador, un servicio, hecho bien.</h2>
-    <p class="section-desc">Me dedico al desarrollo de páginas web. Sin intermediarios ni letra pequeña: hablamos de lo que necesitas y te digo exactamente cuánto va a costar.</p>
+<main id="top">
 
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="tag">01</div>
-        <h3>Desarrollo a medida</h3>
-        <p>Cada web se construye desde cero, ajustada a lo que tu proyecto realmente necesita.</p>
-      </div>
-      <div class="about-card">
-        <div class="tag">02</div>
-        <h3>Comunicación directa</h3>
-        <p>Hablas conmigo, no con un equipo de atención al cliente. Respuesta rápida por WhatsApp o email.</p>
-      </div>
-      <div class="about-card">
-        <div class="tag">03</div>
-        <h3>Precio transparente</h3>
-        <p>Tarifa por línea escrita: sabes desde el primer día cómo se calcula tu presupuesto.</p>
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow">themikel · developer</p>
+    <h1><span class="words-line">Construyo para la web.</span><span class="words-line soft">Aprendo para el metal.</span></h1>
+    <p class="sub">Hoy diseño y desarrollo experiencias web. Mañana, software nativo — empezando por Swift.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">Ver mi trabajo</a>
+      <a href="#contact" class="btn btn-ghost">Hablemos</a>
     </div>
-  </div>
-</section>
 
-<section id="tarifas">
-  <div class="wrap">
-    <div class="section-label">Tarifas</div>
-    <h2 class="section-title">Un precio, sin sorpresas.</h2>
-    <div class="price-tag">
-      <span class="amount">0,30 €</span>
-      <span class="per">/ línea de código escrita</span>
-    </div>
-    <p class="section-desc">Cuantas más líneas necesita tu proyecto, más completo es. El presupuesto se calcula así de simple: número de líneas × 0,30 €.</p>
-
-    <div class="calc-card">
-      <div class="calc-top">
-        <h3>// calculadora de presupuesto</h3>
-      </div>
-      <div class="calc-editor" id="editorPreview"></div>
-      <div class="calc-controls">
-        <label>
-          Líneas estimadas
-          <input type="range" id="linesRange" min="10" max="2000" value="150" step="10">
-        </label>
-        <input type="number" id="linesNumber" min="10" max="5000" value="150">
-        <div class="calc-result">
-          <div class="label">PRESUPUESTO ESTIMADO</div>
-          <div class="value" id="priceValue">45,00 €</div>
+    <div class="device-wrap">
+      <div class="device">
+        <div class="device-bar"><span></span><span></span><span></span></div>
+        <div class="device-body">
+          <div><span class="c">// themikel.dev</span></div>
+          <div>&nbsp;</div>
+          <div><span class="k">const</span> <span class="f">dev</span> = {</div>
+          <div>&nbsp;&nbsp;nombre: <span class="s">"themikel"</span>,</div>
+          <div>&nbsp;&nbsp;stack: [<span class="s">"HTML"</span>, <span class="s">"CSS"</span>, <span class="s">"JS"</span>],</div>
+          <div>&nbsp;&nbsp;sistema: <span class="s">"macOS"</span>,</div>
+          <div>&nbsp;&nbsp;aprendiendo: <span class="s">"Swift"</span>,</div>
+          <div>&nbsp;&nbsp;disponible: <span class="k">true</span></div>
+          <div>}<span class="cursor-blink"></span></div>
         </div>
       </div>
-      <p class="calc-note">Estimación orientativa. El precio final se confirma tras revisar el alcance real del proyecto.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contacto">
-  <div class="wrap">
-    <div class="section-label">Contacto</div>
-    <h2 class="section-title">¿Hablamos de tu proyecto?</h2>
-    <p class="section-desc">Cuéntame qué necesitas y te respondo con un presupuesto claro.</p>
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">Enfoque</p>
+        <h2><span class="words-line">Dos mundos, una forma de trabajar.</span></h2>
+        <p>Empiezo en el navegador. Voy directo al sistema operativo.</p>
+      </div>
 
-    <div class="contact-card">
-      <a class="contact-item" href="https://wa.me/34623919808" target="_blank" rel="noopener">
-        <div class="label">WhatsApp</div>
-        <div class="value">+34 623 919 808</div>
-      </a>
-      <a class="contact-item" href="mailto:koi.ma@icloud.com">
-        <div class="label">Email</div>
-        <div class="value">koi.ma@icloud.com</div>
-      </a>
+      <div class="grid-2">
+        <div class="product-card reveal">
+          <span class="tag">Ahora</span>
+          <h3>Desarrollo web</h3>
+          <p>Sitios y aplicaciones rápidas, responsivas y cuidadas al detalle — de la maqueta al deploy.</p>
+          <div class="stack-row">
+            <p>HTML ·</p>
+            <p>Diseño UI ·</p>
+            <p>MacOS</p>
+          </div>
+        </div>
+
+        <div class="product-card dark reveal">
+          <span class="tag">Próximamente</span>
+          <h3>Software nativo</h3>
+          <p>Apps para macOS e iOS construidas con Swift, pensadas con la misma atención al detalle que un producto de verdad.</p>
+          <div class="stack-row">
+            <p>Swift ·</p>
+            <p>Xcode ·</p>
+            <p>MacOs ·</p>
+            <p>iOs</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="roadmap-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker">El camino</p>
+        <h2><span class="words-line">De la web al sistema.</span></h2>
+        <p>No es un cambio de rumbo, es una siguiente capa.</p>
+      </div>
+
+      <div class="roadmap reveal">
+        <div class="rail"></div>
+
+        <div class="stage active">
+          <div class="stage-dot">01</div>
+          <div class="stage-body">
+            <p class="stage-status">En curso</p>
+            <h3>Desarrollo web</h3>
+            <p>Construyendo sitios y productos web con foco en diseño, rendimiento y detalles que se sienten bien.</p>
+            <div class="stage-row">
+              <span class="chip">Frontend</span>
+              <span class="chip">Diseño de interfaz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-dot">02</div>
+          <div class="stage-body">
+            <p class="stage-status">Aprendiendo</p>
+            <h3>Swift &amp; desarrollo nativo</h3>
+            <p>Sumando Swift y las herramientas de Apple para pasar de páginas a aplicaciones reales.</p>
+            <div class="stage-row">
+              <span class="chip">Swift</span>
+              <span class="chip">SwiftUI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage future">
+          <div class="stage-dot">03</div>
+          <div class="stage-body">
+            <p class="stage-status">A futuro</p>
+            <h3>Programas y lenguajes propios</h3>
+            <p>Explorar más allá de la app — herramientas, utilidades y, eventualmente, mis propias ideas de lenguaje.</p>
+            <div class="stage-row">
+              <span class="chip">Sistemas</span>
+              <span class="chip">Herramientas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-section reveal">
+      <h2><span class="words-line">Hablemos.</span></h2>
+      <p>¿Tienes un proyecto en mente?</p>
+      <div class="contact-links">
+        <a href="mailto:koi.ma@icloud.com" class="btn btn-primary">Escribime <span>→</span></a>
+        <a href="mailto:koi.ma@icloud.com" class="btn btn-ghost">koi.ma@icloud.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  Miguel Ángel Moreno Ruiz — © <span id="year"></span>
+  © 2026 themikel. Hecho con cuidado.
 </footer>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  const range = document.getElementById('linesRange');
-  const number = document.getElementById('linesNumber');
-  const priceValue = document.getElementById('priceValue');
-  const editorPreview = document.getElementById('editorPreview');
-
-  const sampleLines = [
-    "const header = document.querySelector('header');",
-    "function initNav() {",
-    "  const links = document.querySelectorAll('.nav-links a');",
-    "  links.forEach(link => link.addEventListener('click', smoothScroll));",
-    "}",
-    ".hero { display: flex; align-items: center; }",
-    "export async function getProjects() {",
-    "  const res = await fetch('/api/projects');",
-    "  return res.json();",
-    "}",
-    "<section class='contact'>",
-    "  <h2>Contacto</h2>",
-    "</section>",
-    "body { font-family: 'Inter', sans-serif; }",
-    "const form = document.getElementById('contactForm');",
-    "form.addEventListener('submit', handleSubmit);"
-  ];
-
-  function formatPrice(lines){
-    return (lines * 0.30).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  /* ---------- WORD-BY-WORD REVEAL ---------- */
+  function wrapWords(el, startIndex){
+    const text = el.textContent;
+    const tokens = text.split(/(\s+)/);
+    let i = startIndex;
+    el.innerHTML = tokens.map(t => {
+      if(t.trim() === '') return t;
+      i++;
+      return `<span class="word" style="transition-delay:${(i*0.045).toFixed(3)}s">${t}</span>`;
+    }).join('');
+    return i;
   }
 
-  function renderEditor(lines){
-    const visibleCount = Math.min(10, Math.max(3, Math.round(lines / 25)));
-    let html = '';
-    for(let i = 0; i < visibleCount; i++){
-      const line = sampleLines[i % sampleLines.length];
-      html += `<div><span class="line-num">${i + 1}</span>${line}</div>`;
-    }
-    html += `<div style="color:#4A5A5F; margin-top:6px;">... ${lines} líneas en total</div>`;
-    editorPreview.innerHTML = html;
+  // Hero lines: wrap and reveal on load (continuous stagger across both lines)
+  const heroLines = document.querySelectorAll('.hero .words-line');
+  let idx = 0;
+  heroLines.forEach(line => { idx = wrapWords(line, idx); });
+  window.requestAnimationFrame(() => {
+    setTimeout(() => heroLines.forEach(l => l.classList.add('in')), 120);
+  });
+
+  // Section heading lines: wrap now, reveal on scroll via IntersectionObserver
+  document.querySelectorAll('.section-head .words-line, .contact-section .words-line').forEach(line => {
+    wrapWords(line, 0);
+  });
+
+  // Stagger children inside grouped containers (cards, roadmap stages)
+  document.querySelectorAll('.grid-2, .roadmap').forEach(group => {
+    group.querySelectorAll(':scope > .product-card, :scope > .stage').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.12) + 's';
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal, .section-head .words-line, .contact-section .words-line').forEach(el => observer.observe(el));
+
+  // Subtle parallax on the hero code mockup while scrolling
+  const deviceWrap = document.querySelector('.device-wrap');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (deviceWrap && !reducedMotion) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        deviceWrap.style.transform = `translateY(${y * 0.15}px)`;
+      }
+    }, { passive: true });
   }
 
-  function update(lines){
-    lines = Math.max(1, Math.min(5000, Number(lines) || 0));
-    range.value = lines;
-    number.value = lines;
-    priceValue.textContent = formatPrice(lines);
-    renderEditor(lines);
-  }
-
-  range.addEventListener('input', () => update(range.value));
-  number.addEventListener('input', () => update(number.value));
-
-  update(150);
 </script>
 
 </body>
